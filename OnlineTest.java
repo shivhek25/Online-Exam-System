@@ -72,8 +72,11 @@ class OnlineTest extends JFrame implements ActionListener
                 count=count+1;  
             current++;  
             //System.out.println("correct ans="+count);  
-            JOptionPane.showMessageDialog(this,"correct ans="+count);  
-            System.exit(0);  
+            int a = JOptionPane.showConfirmDialog(this,"correct ans="+count+"\n Do you wish to see the answer key ?");  
+            if(a==JOptionPane.YES_OPTION)
+                JOptionPane.showMessageDialog(this,"Answer Key:\n");
+            else
+             System.exit(0);  
         }  
     }  
     void welcome()
