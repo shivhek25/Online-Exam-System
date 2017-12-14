@@ -1,0 +1,11 @@
+CREATE DATABASE qa;
+USE qa;
+create table qao  
+(   
+	qno int primary key,   
+	question varchar(250),   
+	option1 varchar(20),   
+	option2 varchar(20),   
+	option3 varchar(20),   
+	option4 varchar(20)
+);

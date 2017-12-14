@@ -1,0 +1,7 @@
+USE qa;
+create table ua  
+(   
+	qno int primary key,   
+	ans varchar(20),
+	foreign key (qno) references qao(qno)
+);

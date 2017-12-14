@@ -1,7 +1,7 @@
 import java.awt.*;  
 import java.awt.event.*;  
 import javax.swing.*;  
-  
+
 class OnlineTest extends JFrame implements ActionListener  
 {  
     JLabel l;  
