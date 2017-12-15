@@ -50,23 +50,31 @@ class OnlineTest extends JFrame implements ActionListener
     }  
     public void actionPerformed(ActionEvent e)  
     {  
-        if(e.getSource()==b1)  
+        if(e.getSource()==b1 && current ==9 )
+        {
+            JOptionPane.showMessageDialog(this,"No more questions. Please go back to previous question or end test and see result.\n");   
+        }
+        else if(e.getSource()==b1)  
         {  
             if(current == -1)
                 b1.setText("Next");
             if(check())  
                 count=count+1;  
             current++;  
-            setnext();    
+            setnext(); 
         }  
-        if(e.getSource()==b2)  
+        else if(e.getSource()==b2 && current ==0 )
+        {
+            JOptionPane.showMessageDialog(this,"No more questions. Please go back to next question or end test and see result.\n");   
+        }
+        else if(e.getSource()==b2)  
         {  
             if(check())  
                 count=count+1;  
             current--;  
             setprevious();     
         }  
-        if(e.getActionCommand().equals("Result"))  
+        else if(e.getActionCommand().equals("Result"))  
         {  
             if(check())  
                 count=count+1;  
