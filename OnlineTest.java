@@ -62,7 +62,10 @@ class OnlineTest extends JFrame implements ActionListener
         else if(e.getSource()==b1)  
         {  
             if(current == -1)
+            {
                 b1.setText("Next");
+                pickrandom();
+            }
             else
                 adduserans();
             current++;  
@@ -95,6 +98,27 @@ class OnlineTest extends JFrame implements ActionListener
     {
         l.setText("Welcome to the online examination. Click button to start with the test.") ;
     }
+    void pickrandom()
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
+            Statement stmt = con.createStatement();
+            String randstmt = "select * from qao";
+            ResultSet rs = stmt.executeQuery(randstmt);
+            while(rs.next())
+            {
+                //push all values of rs in new database 'stuqao'
+                stmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+rs.getString("question")+"','"+rs.getString("option1")+"','"+rs.getString("option2")+"','"+rs.getString("option3")+"','"+rs.getString("option4")+"'");
+            }
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
     void setnext() 
     {  
         jb[4].setSelected(true);  
@@ -105,7 +129,7 @@ class OnlineTest extends JFrame implements ActionListener
             Statement stmt = con.createStatement();
             if(current==0)  
             {    
-                String sql="select * from qao where qno=1";
+                String sql="select * from stuqao where qno=1";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -118,7 +142,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==1)  
             {  
-                String sql="select * from qao where qno=2";
+                String sql="select * from stuqao where qno=2";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -131,7 +155,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==2)  
             {  
-                String sql="select * from qao where qno=3";
+                String sql="select * from stuqao where qno=3";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -144,7 +168,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==3)  
             {  
-                String sql="select * from qao where qno=4";
+                String sql="select * from stuqao where qno=4";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -157,7 +181,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==4)  
             {  
-                String sql="select * from qao where qno=5";
+                String sql="select * from stuqao where qno=5";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -170,7 +194,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==5)  
             {  
-                String sql="select * from qao where qno=6";
+                String sql="select * from stuqao where qno=6";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -183,7 +207,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==6)  
             {  
-                String sql="select * from qao where qno=7";
+                String sql="select * from stuqao where qno=7";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -196,7 +220,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==7)  
             {  
-                String sql="select * from qao where qno=8";
+                String sql="select * from stuqao where qno=8";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -209,7 +233,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==8)  
             {  
-                String sql="select * from qao where qno=9";
+                String sql="select * from stuqao where qno=9";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -222,7 +246,7 @@ class OnlineTest extends JFrame implements ActionListener
             }  
             if(current==9)  
             {  
-                String sql="select * from qao where qno=10";
+                String sql="select * from stuqao where qno=10";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("question");
@@ -290,6 +314,7 @@ class OnlineTest extends JFrame implements ActionListener
             System.out.println(e);
         }
     }
+    //make changes here ----------------------->>>>>>>>>
     void showAnswerKey() //function to print answer key if requested for
     {
         try
@@ -338,6 +363,16 @@ class OnlineTest extends JFrame implements ActionListener
             stmt.executeUpdate("insert into qao values(8,'Q8. What language are we using ?','C','C++','Java','Python')");
             stmt.executeUpdate("insert into qao values(9,'Q9. What language are we using ?','C','C++','Java','Python')");
             stmt.executeUpdate("insert into qao values(10,'Q10. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(11,'Q11. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(12,'Q12. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(13,'Q13. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(14,'Q14. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(15,'Q15. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(16,'Q16. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(17,'Q17. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(18,'Q18. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(19,'Q19. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(20,'Q20. What language are we using ?','C','C++','Java','Python')");
             con.close();
         }
         catch(Exception e)
@@ -362,6 +397,16 @@ class OnlineTest extends JFrame implements ActionListener
             stmt.executeUpdate("insert into ua values(8,'','Java')");
             stmt.executeUpdate("insert into ua values(9,'','Java')");
             stmt.executeUpdate("insert into ua values(10,'','Java')");
+            stmt.executeUpdate("insert into ua values(11,'','Java')");
+            stmt.executeUpdate("insert into ua values(12,'','Java')");
+            stmt.executeUpdate("insert into ua values(13,'','Java')");
+            stmt.executeUpdate("insert into ua values(14,'','Java')");
+            stmt.executeUpdate("insert into ua values(15,'','Java')");
+            stmt.executeUpdate("insert into ua values(16,'','Java')");
+            stmt.executeUpdate("insert into ua values(17,'','Java')");
+            stmt.executeUpdate("insert into ua values(18,'','Java')");
+            stmt.executeUpdate("insert into ua values(19,'','Java')");
+            stmt.executeUpdate("insert into ua values(20,'','Java')");
             con.close();
         }
         catch(Exception e)
