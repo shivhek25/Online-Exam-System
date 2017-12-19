@@ -5,3 +5,7 @@ create table ua
 	ans varchar(20),
 	foreign key (qno) references qao(qno)
 );
+ALTER TABLE ua ADD UNIQUE (qno);
+ALTER TABLE ua CHANGE COLUMN `ans` `userans` VARCHAR(20) NOT NULL;
+ALTER TABLE ua ADD correctans varchar(20);
+ALTER TABLE ua modify userans varchar(20);
