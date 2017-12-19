@@ -84,7 +84,7 @@ class OnlineTest extends JFrame implements ActionListener
             current++;  
             //System.out.println("correct ans="+count);  
             check();
-            int a = JOptionPane.showConfirmDialog(this,"Your Score: "+count+" / 10\nP\n Do you wish to see the answer key ?");  
+            int a = JOptionPane.showConfirmDialog(this,"Your Score: "+count+" / 10\nPercentage: "+(count*10)+" %\n Do you wish to see the answer key ?");  
             if(a==JOptionPane.YES_OPTION)
                 showAnswerKey();
             else
