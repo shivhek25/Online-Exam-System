@@ -64,7 +64,6 @@ class OnlineTest extends JFrame implements ActionListener
             if(current == -1)
             {
                 b1.setText("Next");
-                pickrandom();
             }
             else
                 adduserans();
@@ -97,27 +96,6 @@ class OnlineTest extends JFrame implements ActionListener
     void welcome() //Welcome Message 
     {
         l.setText("Welcome to the online examination. Click button to start with the test.") ;
-    }
-    void pickrandom()
-    {
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
-            Statement stmt = con.createStatement();
-            String randstmt = "select * from qao";
-            ResultSet rs = stmt.executeQuery(randstmt);
-            while(rs.next())
-            {
-                //push all values of rs in new database 'stuqao'
-                stmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+rs.getString("question")+"','"+rs.getString("option1")+"','"+rs.getString("option2")+"','"+rs.getString("option3")+"','"+rs.getString("option4")+"'");
-            }
-            con.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
     }
     void setnext() 
     {  
@@ -263,7 +241,7 @@ class OnlineTest extends JFrame implements ActionListener
         }   
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("setnext\n"+e);
         }
     }  
     void adduserans() //function to connect to qa database and insert user's answers into ua table
@@ -288,7 +266,7 @@ class OnlineTest extends JFrame implements ActionListener
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("adduserans\n"+e);
         }
     }
     void check()  //function to check number of correct answers 
@@ -311,7 +289,7 @@ class OnlineTest extends JFrame implements ActionListener
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("check\n"+e);
         }
     }
     //make changes here ----------------------->>>>>>>>>
@@ -343,7 +321,7 @@ class OnlineTest extends JFrame implements ActionListener
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("showAnswerKey\n"+e);
         }
     }
     static void qaoDBcon() //function to connect to qa database and insert correct answers into qao table
@@ -377,7 +355,7 @@ class OnlineTest extends JFrame implements ActionListener
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("qaoDBcon\n"+e);
         }
     }
     static void uaDBcon() //function to connect to qa database and insert correct answers into ua table
@@ -411,13 +389,35 @@ class OnlineTest extends JFrame implements ActionListener
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("uaDBcon\n"+e);
+        }
+    }
+    static void pickrandom()
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:qa","root","shivhek25@mysql");
+            Statement stmt = con.createStatement();
+            String sql = "select * from qao order by rand() limit 10";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                //push all values of rs in new database 'stuqao'
+                stmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+rs.getString("question")+"','"+rs.getString("option1")+"','"+rs.getString("option2")+"','"+rs.getString("option3")+"','"+rs.getString("option4")+"'");
+            }
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("pickrandom\n"+e);
         }
     }
     public static void main(String s[])
     {  
         qaoDBcon(); //creating question-option database
         uaDBcon(); //creating user answer-correct answer database
+        pickrandom(); //creating question-option database that will be asked to student
         new OnlineTest("Online Exam System");  // creating object 
     }  
 }  
