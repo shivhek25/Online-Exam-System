@@ -7,3 +7,4 @@ create table stuqao
 	option3 varchar(20),   
 	option4 varchar(20)
 );
+alter table stuqao add unique(qno);

@@ -397,14 +397,22 @@ class OnlineTest extends JFrame implements ActionListener
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:qa","root","shivhek25@mysql");
-            Statement stmt = con.createStatement();
-            String sql = "select * from qao order by rand() limit 10";
-            ResultSet rs = stmt.executeQuery(sql);
+            Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
+            //Statement stmt = con.createStatement();
+            PreparedStatement randomstmt = null;
+            String randomsql = "select * from qao order by rand() limit 10";
+            // pick 10 random questions from qao table and store in result set 
+            randomstmt = con.prepareStatement(randomsql);
+            ResultSet rs = randomstmt.executeQuery();
             while(rs.next())
             {
                 //push all values of rs in new database 'stuqao'
-                stmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+rs.getString("question")+"','"+rs.getString("option1")+"','"+rs.getString("option2")+"','"+rs.getString("option3")+"','"+rs.getString("option4")+"'");
+                String s1 =rs.getString("question");
+                String s2 =rs.getString("option1");
+                String s3 =rs.getString("option2");
+                String s4 =rs.getString("option3");
+                String s5 =rs.getString("option4");
+                randomstmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"')");
             }
             con.close();
         }
