@@ -331,26 +331,26 @@ class OnlineTest extends JFrame implements ActionListener
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("insert into qao values(1,'Q1. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(2,'Q2. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(3,'Q3. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(4,'Q4. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(5,'Q5. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(6,'Q6. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(7,'Q7. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(8,'Q8. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(9,'Q9. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(10,'Q10. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(11,'Q11. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(12,'Q12. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(13,'Q13. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(14,'Q14. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(15,'Q15. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(16,'Q16. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(17,'Q17. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(18,'Q18. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(19,'Q19. What language are we using ?','C','C++','Java','Python')");
-            stmt.executeUpdate("insert into qao values(20,'Q20. What language are we using ?','C','C++','Java','Python')");
+            stmt.executeUpdate("insert into qao values(1,'Q1. What language are we using ?','C1','C1++','J1ava','P1ython')");
+            stmt.executeUpdate("insert into qao values(2,'Q2. What language are we using ?','C2','C2++','J2ava','P2ython')");
+            stmt.executeUpdate("insert into qao values(3,'Q3. What language are we using ?','C3','C3++','J3ava','P3ython')");
+            stmt.executeUpdate("insert into qao values(4,'Q4. What language are we using ?','C4','C4++','J4ava','P4ython')");
+            stmt.executeUpdate("insert into qao values(5,'Q5. What language are we using ?','C5','C5++','J5ava','P5ython')");
+            stmt.executeUpdate("insert into qao values(6,'Q6. What language are we using ?','C6','C6++','J6ava','P6ython')");
+            stmt.executeUpdate("insert into qao values(7,'Q7. What language are we using ?','C7','C7++','J7ava','P7ython')");
+            stmt.executeUpdate("insert into qao values(8,'Q8. What language are we using ?','C8','C8++','J8ava','P8ython')");
+            stmt.executeUpdate("insert into qao values(9,'Q9. What language are we using ?','C9','C9++','J9ava','P9ython')");
+            stmt.executeUpdate("insert into qao values(10,'Q10. What language are we using ?','C10','C10++','J10ava','P10ython')");
+            stmt.executeUpdate("insert into qao values(11,'Q11. What language are we using ?','C11','C11++','J11ava','P11ython')");
+            stmt.executeUpdate("insert into qao values(12,'Q12. What language are we using ?','C12','C12++','J12ava','P12ython')");
+            stmt.executeUpdate("insert into qao values(13,'Q13. What language are we using ?','C13','C13++','J13ava','P13ython')");
+            stmt.executeUpdate("insert into qao values(14,'Q14. What language are we using ?','C14','C14++','J14ava','P14ython')");
+            stmt.executeUpdate("insert into qao values(15,'Q15. What language are we using ?','C15','C15++','J15ava','P15ython')");
+            stmt.executeUpdate("insert into qao values(16,'Q16. What language are we using ?','C16','C16++','J16ava','P16ython')");
+            stmt.executeUpdate("insert into qao values(17,'Q17. What language are we using ?','C17','C17++','J17ava','P17ython')");
+            stmt.executeUpdate("insert into qao values(18,'Q18. What language are we using ?','C18','C18++','J18ava','P18ython')");
+            stmt.executeUpdate("insert into qao values(19,'Q19. What language are we using ?','C19','C19++','J19ava','P19ython')");
+            stmt.executeUpdate("insert into qao values(20,'Q20. What language are we using ?','C20','C20++','J20ava','P20ython')");
             con.close();
         }
         catch(Exception e)
@@ -398,22 +398,20 @@ class OnlineTest extends JFrame implements ActionListener
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
-            //Statement stmt = con.createStatement();
             PreparedStatement randomstmt = null;
-            String randomsql = "select * from qao order by rand() limit 10";
-            // pick 10 random questions from qao table and store in result set 
+            String randomsql = "select * from qao order by rand() limit 1"; // pick 10 random questions from qao table and store in result set 
             randomstmt = con.prepareStatement(randomsql);
-            ResultSet rs = randomstmt.executeQuery();
-            while(rs.next())
+            ResultSet randomrs = randomstmt.executeQuery();
+            while(randomrs.next()) //push all values of rs in new database 'stuqao'
             {
-                //push all values of rs in new database 'stuqao'
-                String s1 =rs.getString("question");
-                String s2 =rs.getString("option1");
-                String s3 =rs.getString("option2");
-                String s4 =rs.getString("option3");
-                String s5 =rs.getString("option4");
+                String s1 =randomrs.getString("question");
+                String s2 =randomrs.getString("option1");
+                String s3 =randomrs.getString("option2");
+                String s4 =randomrs.getString("option3");
+                String s5 =randomrs.getString("option4");
                 randomstmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"')");
             }
+            randomrs.close();
             con.close();
         }
         catch(Exception e)
