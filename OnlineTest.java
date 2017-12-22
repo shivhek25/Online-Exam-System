@@ -11,7 +11,8 @@ class OnlineTest extends JFrame implements ActionListener
     JButton b1,b2,b3;  //for start/next, previous and result buttons
     ButtonGroup bg;  
     int count=0,attempted=0,current=-1,x=1,y=1,now=0; 
-    long StartTime, EndTime; 
+    long StartTime, EndTime,seconds,minutes,flag=0;; 
+    int a;
     OnlineTest(String s)  
     {  
         super(s);  
@@ -86,9 +87,26 @@ class OnlineTest extends JFrame implements ActionListener
             EndTime = System.currentTimeMillis(); //stores time when user ends test
             EndTime-=StartTime; //stores time taken by user to give test in milliseconds
             EndTime/=1000; //stores time taken by user to give test in seconds
+            if(EndTime>=60) // if time can be expressed in minutes or hours
+            {
+                seconds = EndTime%60; //calculating seconds
+                EndTime/=60; //calculating minutes
+                flag=1;
+                if(EndTime>=60) //if time can be expressed in hours
+                {
+                    flag=2;
+                    minutes=EndTime%60; //calculating minutes
+                    EndTime/=60; //calculating hours
+                }
+            }
             current++;   
             check(); //checks user's responses against correct responses stored in database 
-            int a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");  
+            if(flag==0)
+             a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");  
+            else if(flag==1)
+             a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" minutes "+seconds+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");     
+            else
+             a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" hours "+minutes+" minutes "+seconds+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");     
             //displays number of attempted questions, total score and percentage
             if(a==JOptionPane.YES_OPTION) //checks if user wants to see answer key or not
                 showAnswerKey();
