@@ -1,3 +1,4 @@
+USE qa;
 create table stuqao  
 (   
 	qno int primary key,   

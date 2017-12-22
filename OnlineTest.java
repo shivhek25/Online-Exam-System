@@ -1,16 +1,16 @@
-import java.awt.*;  
-import java.awt.event.*;  
-import javax.swing.*;  
-import java.sql.*;
+//importing required packages 
+import java.awt.*; 
+import java.awt.event.*; //package to implement event response 
+import javax.swing.*; //package to implement swing gui
+import java.sql.*; //package to connect to mysql database
 
 class OnlineTest extends JFrame implements ActionListener  
 {  
-    JLabel l;  
-    JRadioButton jb[]=new JRadioButton[5];  
-    JButton b1,b2,b3;  
+    JLabel l;  //for setting question text
+    JRadioButton jb[]=new JRadioButton[5]; //for options of the question  
+    JButton b1,b2,b3;  //for start/next, previous and result buttons
     ButtonGroup bg;  
     int count=0,attempted=0,current=-1,x=1,y=1,now=0;  
-    int m[]=new int[10];      
     OnlineTest(String s)  
     {  
         super(s);  
@@ -23,19 +23,17 @@ class OnlineTest extends JFrame implements ActionListener
             add(jb[i]);  
             bg.add(jb[i]);  
         }
-        b1=new JButton("Start");   
-        b1.addActionListener(this);
-        add(b1);
-        //added start button
-        welcome(); 
-        //displays welcome message
-        b2=new JButton("Previous");
-        b3=new JButton("Result"); 
+        b1=new JButton("Start");   //Setting text of first button
+        b1.addActionListener(this); //Added event listener, i.e., action to be taken on being clicked
+        add(b1); //added start button
+        welcome(); //displays welcome message
+        b2=new JButton("Previous"); //Setting text of second button
+        b3=new JButton("Result"); //Setting text of third button
         b2.addActionListener(this); 
         b3.addActionListener(this);  
         add(b2);add(b3);
         // added previous and result buttons
-        l.setBounds(30,40,450,20);  
+        l.setBounds(30,40,450,20);  //setting dimensions of question area
         if(current !=-1)
         {   
             jb[0].setBounds(50,80,100,20);  //setting dimensions and coordinates of radio button group
@@ -54,69 +52,69 @@ class OnlineTest extends JFrame implements ActionListener
     }  
     public void actionPerformed(ActionEvent e)  
     {  
-        if(e.getSource()==b1 && current ==9 )
+        if(e.getSource()==b1 && current ==9 ) //if all 10 questions have been displayed and user clicks on next, i.e., no more questions are available to be displayed
         {
-            adduserans();
+            adduserans(); //adding user's response to the 10th question
             JOptionPane.showMessageDialog(this,"No more questions. Please go back to previous question or end test and see result.\n");   
         }
-        else if(e.getSource()==b1)  
+        else if(e.getSource()==b1)  //if user clicks on start/next and there are more questions available to be displayed
         {  
-            if(current == -1)
+            if(current == -1) //if user hasn't started test yet, i.e., she/he clicks on "start" button
             {
-                b1.setText("Next");
+                b1.setText("Next"); //setting text of b1 button to "next"
             }
             else
-                adduserans();
-            current++;  
-            setnext(); 
+                adduserans(); //adding user's response to the question
+            current++; //incrementing counter of questions countered
+            setnext(); //setting next question
         }  
-        else if(e.getSource()==b2 && current ==0 )
+        else if(e.getSource()==b2 && current ==0 ) //if user clicks on previous button and there are no more questions available to be displayed
         {
-            adduserans();
+            adduserans(); 
             JOptionPane.showMessageDialog(this,"No more questions. Please go back to next question or end test and see result.\n");   
         }
-        else if(e.getSource()==b2)  
+        else if(e.getSource()==b2)  //if user clicks on previous and there are more questions available to be displayed
         {   
-            current--;  
+            current--;  //decrementing counter of questions countered
             adduserans();
             setnext();   
         }  
-        else if(e.getActionCommand().equals("Result"))  
+        else if(e.getActionCommand().equals("Result"))  //if user clicks on result button
         {  
-            current++;  
-            //System.out.println("correct ans="+count);  
-            check();
+            current++;   
+            check(); //checks user's responses against correct responses stored in database 
             int a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\n Do you wish to see the answer key ?");  
-            if(a==JOptionPane.YES_OPTION)
+            //displays number of attempted questions, total score and percentage
+            if(a==JOptionPane.YES_OPTION) //checks if user wants to see answer key or not
                 showAnswerKey();
             else
-             System.exit(0);  
+             System.exit(0);  //closes interface and exits
         }  
     }  
     void welcome() //Welcome Message 
     {
         l.setText("Welcome to the online examination. Click button to start with the test.") ;
     }
-    void setnext() 
+    void setnext() //function to set next/previous question 
     {  
         jb[4].setSelected(true);  
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
+            Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql"); //connecting to database 'qa'
             Statement stmt = con.createStatement();
             if(current==0)  
             {    
-                String sql="select * from stuqao where qno=1";
-                ResultSet rs = stmt.executeQuery(sql);
-                rs.next();
-                String s1 =rs.getString("question");
-                String s2 =rs.getString("option1");
-                String s3 =rs.getString("option2");
-                String s4 =rs.getString("option3");
-                String s5 =rs.getString("option4");
-                l.setText("Q.1 "+s1);  
-                jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
+                String sql="select * from stuqao where qno=1"; //selects all fields of table 'stuqao' with value of field qno equal to 1
+                ResultSet rs = stmt.executeQuery(sql); //executing mysql query 
+                rs.next(); //pointing to next row of result set 
+                String s1 =rs.getString("question"); //getting value stored in result set under field "question"
+                String s2 =rs.getString("option1"); //getting value stored in result set under field "option1"
+                String s3 =rs.getString("option2"); //getting value stored in result set under field "option2"
+                String s4 =rs.getString("option3"); //getting value stored in result set under field "option3"
+                String s5 =rs.getString("option4"); //getting value stored in result set under field "option4"
+                l.setText("Q.1 "+s1); //setting question
+                jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  //setting options
             }  
             if(current==1)  
             {  
@@ -283,7 +281,7 @@ class OnlineTest extends JFrame implements ActionListener
                 rs.next();
                 String s1 =rs.getString("userans");
                 String s2 =rs.getString("correctans");
-                if(!(s1.equals("")))
+                if(!(s1.equals(""))) //checks if the user has attempted the question or not 
                     attempted++;
                 if(s1.equals(s2)) //checks if user's answer matches correct answer
                  count++;
@@ -294,7 +292,6 @@ class OnlineTest extends JFrame implements ActionListener
             System.out.println("check\n"+e);
         }
     }
-    //make changes here ----------------------->>>>>>>>>
     void showAnswerKey() //function to print answer key if requested for
     {
         try
@@ -327,7 +324,7 @@ class OnlineTest extends JFrame implements ActionListener
             System.out.println("showAnswerKey\n"+e);
         }
     }
-    static void qaoDBcon() //function to connect to qa database and insert correct answers into qao table
+    static void qaoDBcon() //function to connect to qa database and insert question and options into qao table
     {
         try
         {
@@ -361,7 +358,7 @@ class OnlineTest extends JFrame implements ActionListener
             System.out.println("qaoDBcon\n"+e);
         }
     }
-    static void uaDBcon() //function to connect to qa database and insert correct answers into ua table
+    static void uaDBcon() //function to connect to qa database and insert correct answers of all questions into ua table
     {
         try
         {
@@ -396,6 +393,9 @@ class OnlineTest extends JFrame implements ActionListener
         }
     }
     static void pickrandom()
+    /*function to pick 10 random questions from the qao table, store them in stuqao table and display to the user
+    this function also stores the correct answers of these 10 picked questions into the table stuua
+    */
     {
         try
         {
@@ -409,17 +409,17 @@ class OnlineTest extends JFrame implements ActionListener
                 a[i]=0;
             while(c!=10)
             {
-                p=1+(int)(Math.random()*20);
+                p=1+(int)(Math.random()*20); //generating random integers in range [1,20]
                 if(a[p]==0)
                 {
-                    a[p]=1;
-                    c++;
+                    a[p]=1; //marking the 10 randomly selected integers
+                    c++; //counting number of random indexes marked
                 }
             }
             c=0;
             for(int i=1;i<=20;i++)
             {
-                if(a[i]==1)
+                if(a[i]==1) //checks if integer 'i' has been picked by code as a random integer 
                 {
                     c++;
                     String sql="select * from qao where qno="+i+"";
