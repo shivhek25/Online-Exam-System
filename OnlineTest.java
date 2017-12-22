@@ -54,65 +54,81 @@ class OnlineTest extends JFrame implements ActionListener
     }  
     public void actionPerformed(ActionEvent e)  
     {  
-        if(e.getSource()==b1 && current ==9 ) //if all 10 questions have been displayed and user clicks on next, i.e., no more questions are available to be displayed
+        try
         {
-            adduserans(); //adding user's response to the 10th question
-            JOptionPane.showMessageDialog(this,"No more questions. Please go back to previous question or end test and see result.\n");   
-        }
-        else if(e.getSource()==b1)  //if user clicks on start/next and there are more questions available to be displayed
-        {  
-            if(current == -1) //if user hasn't started test yet, i.e., she/he clicks on "start" button
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql"); //connecting to database 'qa'
+            Statement stmt = con.createStatement();
+            if(e.getSource()==b1 && current ==9 ) //if all 10 questions have been displayed and user clicks on next, i.e., no more questions are available to be displayed
             {
-                StartTime = System.currentTimeMillis(); //stores time when user starts test
-                b1.setText("Next"); //setting text of b1 button to "next"
+                adduserans(); //adding user's response to the 10th question
+                JOptionPane.showMessageDialog(this,"No more questions. Please go back to previous question or end test and see result.\n");   
             }
-            else
-                adduserans(); //adding user's response to the question
-            current++; //incrementing counter of questions countered
-            setnext(); //setting next question
-        }  
-        else if(e.getSource()==b2 && current ==0 ) //if user clicks on previous button and there are no more questions available to be displayed
-        {
-            adduserans(); 
-            JOptionPane.showMessageDialog(this,"No more questions. Please go back to next question or end test and see result.\n");   
-        }
-        else if(e.getSource()==b2)  //if user clicks on previous and there are more questions available to be displayed
-        {   
-            current--;  //decrementing counter of questions countered
-            adduserans();
-            setnext();   
-        }  
-        else if(e.getActionCommand().equals("Result"))  //if user clicks on result button
-        {  
-            EndTime = System.currentTimeMillis(); //stores time when user ends test
-            EndTime-=StartTime; //stores time taken by user to give test in milliseconds
-            EndTime/=1000; //stores time taken by user to give test in seconds
-            if(EndTime>=60) // if time can be expressed in minutes or hours
-            {
-                seconds = EndTime%60; //calculating seconds
-                EndTime/=60; //calculating minutes
-                flag=1;
-                if(EndTime>=60) //if time can be expressed in hours
+            else if(e.getSource()==b1)  //if user clicks on start/next and there are more questions available to be displayed
+            {  
+                if(current == -1) //if user hasn't started test yet, i.e., she/he clicks on "start" button
                 {
-                    flag=2;
-                    minutes=EndTime%60; //calculating minutes
-                    EndTime/=60; //calculating hours
+                    StartTime = System.currentTimeMillis(); //stores time when user starts test
+                    b1.setText("Next"); //setting text of b1 button to "next"
                 }
+                else
+                    adduserans(); //adding user's response to the question
+                current++; //incrementing counter of questions countered
+                setnext(); //setting next question
+            }  
+            else if(e.getSource()==b2 && current ==0 ) //if user clicks on previous button and there are no more questions available to be displayed
+            {
+                adduserans(); 
+                JOptionPane.showMessageDialog(this,"No more questions. Please go back to next question or end test and see result.\n");   
             }
-            current++;   
-            check(); //checks user's responses against correct responses stored in database 
-            if(flag==0)
-             a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");  
-            else if(flag==1)
-             a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" minutes "+seconds+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");     
-            else
-             a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" hours "+minutes+" minutes "+seconds+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");     
-            //displays number of attempted questions, total score and percentage
-            if(a==JOptionPane.YES_OPTION) //checks if user wants to see answer key or not
-                showAnswerKey();
-            else
-             System.exit(0);  //closes interface and exits
-        }  
+            else if(e.getSource()==b2)  //if user clicks on previous and there are more questions available to be displayed
+            {   
+                current--;  //decrementing counter of questions countered
+                adduserans();
+                setnext();   
+            }  
+            else if(e.getActionCommand().equals("Result"))  //if user clicks on result button
+            {  
+                EndTime = System.currentTimeMillis(); //stores time when user ends test
+                EndTime-=StartTime; //stores time taken by user to give test in milliseconds
+                EndTime/=1000; //stores time taken by user to give test in seconds
+                if(EndTime>=60) // if time can be expressed in minutes or hours
+                {
+                    seconds = EndTime%60; //calculating seconds
+                    EndTime/=60; //calculating minutes
+                    flag=1;
+                    if(EndTime>=60) //if time can be expressed in hours
+                    {
+                        flag=2;
+                        minutes=EndTime%60; //calculating minutes
+                        EndTime/=60; //calculating hours
+                    }
+                }
+                current++;   
+                check(); //checks user's responses against correct responses stored in database 
+                if(flag==0)
+                 a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");  
+                else if(flag==1)
+                 a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" minutes "+seconds+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");     
+                else
+                 a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" hours "+minutes+" minutes "+seconds+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");     
+                //displays number of attempted questions, total score and percentage
+                if(a==JOptionPane.YES_OPTION) //checks if user wants to see answer key or not
+                    showAnswerKey();
+                else
+                {
+                    stmt.executeUpdate("delete from ua");
+                    stmt.executeUpdate("delete from stuua");
+                    stmt.executeUpdate("delete from stuqao");
+                    stmt.executeUpdate("delete from qao");
+                    System.exit(0);  //closes interface and exits
+                }
+            } 
+        }
+        catch(Exception ex)
+        {
+            System.out.println("actionPerformed"+ex);
+        } 
     }  
     void welcome() //Welcome Message 
     {
@@ -339,6 +355,10 @@ class OnlineTest extends JFrame implements ActionListener
                  answerkey+="  10"+"         "+s1+"         "+s2+"\n";
             }
             JOptionPane.showMessageDialog(this,answerkey); //prints answer key
+            stmt.executeUpdate("delete from ua");
+            stmt.executeUpdate("delete from stuua");
+            stmt.executeUpdate("delete from stuqao");
+            stmt.executeUpdate("delete from qao");
             System.exit(0);
             con.close();
         }
