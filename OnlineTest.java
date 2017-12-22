@@ -10,7 +10,8 @@ class OnlineTest extends JFrame implements ActionListener
     JRadioButton jb[]=new JRadioButton[5]; //for options of the question  
     JButton b1,b2,b3;  //for start/next, previous and result buttons
     ButtonGroup bg;  
-    int count=0,attempted=0,current=-1,x=1,y=1,now=0;  
+    int count=0,attempted=0,current=-1,x=1,y=1,now=0; 
+    long StartTime, EndTime; 
     OnlineTest(String s)  
     {  
         super(s);  
@@ -61,6 +62,7 @@ class OnlineTest extends JFrame implements ActionListener
         {  
             if(current == -1) //if user hasn't started test yet, i.e., she/he clicks on "start" button
             {
+                StartTime = System.currentTimeMillis(); //stores time when user starts test
                 b1.setText("Next"); //setting text of b1 button to "next"
             }
             else
@@ -81,9 +83,12 @@ class OnlineTest extends JFrame implements ActionListener
         }  
         else if(e.getActionCommand().equals("Result"))  //if user clicks on result button
         {  
+            EndTime = System.currentTimeMillis(); //stores time when user ends test
+            EndTime-=StartTime; //stores time taken by user to give test in milliseconds
+            EndTime/=1000; //stores time taken by user to give test in seconds
             current++;   
             check(); //checks user's responses against correct responses stored in database 
-            int a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\n Do you wish to see the answer key ?");  
+            int a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nTime taken: "+EndTime+" seconds\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\nDo you wish to see the answer key ?");  
             //displays number of attempted questions, total score and percentage
             if(a==JOptionPane.YES_OPTION) //checks if user wants to see answer key or not
                 showAnswerKey();
