@@ -9,7 +9,7 @@ class OnlineTest extends JFrame implements ActionListener
     JRadioButton jb[]=new JRadioButton[5];  
     JButton b1,b2,b3;  
     ButtonGroup bg;  
-    int count=0,current=-1,x=1,y=1,now=0;  
+    int count=0,attempted=0,current=-1,x=1,y=1,now=0;  
     int m[]=new int[10];      
     OnlineTest(String s)  
     {  
@@ -86,7 +86,7 @@ class OnlineTest extends JFrame implements ActionListener
             current++;  
             //System.out.println("correct ans="+count);  
             check();
-            int a = JOptionPane.showConfirmDialog(this,"Your Score: "+count+" / 10\nPercentage: "+(count*10)+" %\n Do you wish to see the answer key ?");  
+            int a = JOptionPane.showConfirmDialog(this,"Attempted questions: "+attempted+" / 10\nYour Score: "+count+" / 10\nPercentage: "+(count*10)+" %\n Do you wish to see the answer key ?");  
             if(a==JOptionPane.YES_OPTION)
                 showAnswerKey();
             else
@@ -115,7 +115,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.1 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==1)  
@@ -128,7 +128,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.2 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==2)  
@@ -141,7 +141,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.3 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==3)  
@@ -154,7 +154,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.4 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==4)  
@@ -167,7 +167,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.5 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==5)  
@@ -180,7 +180,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.6 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==6)  
@@ -193,7 +193,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.7 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==7)  
@@ -206,7 +206,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.8 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==8)  
@@ -219,7 +219,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.9 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             if(current==9)  
@@ -232,7 +232,7 @@ class OnlineTest extends JFrame implements ActionListener
                 String s3 =rs.getString("option2");
                 String s4 =rs.getString("option3");
                 String s5 =rs.getString("option4");
-                l.setText(s1);  
+                l.setText("Q.10 "+s1);  
                 jb[0].setText(s2);jb[1].setText(s3);jb[2].setText(s4);jb[3].setText(s5);  
             }  
             l.setBounds(30,40,450,20);  
@@ -283,6 +283,8 @@ class OnlineTest extends JFrame implements ActionListener
                 rs.next();
                 String s1 =rs.getString("userans");
                 String s2 =rs.getString("correctans");
+                if(!(s1.equals("")))
+                    attempted++;
                 if(s1.equals(s2)) //checks if user's answer matches correct answer
                  count++;
             }
@@ -317,6 +319,7 @@ class OnlineTest extends JFrame implements ActionListener
                  answerkey+="  10"+"         "+s1+"         "+s2+"\n";
             }
             JOptionPane.showMessageDialog(this,answerkey); //prints answer key
+            System.exit(0);
             con.close();
         }
         catch(Exception e)
@@ -331,26 +334,26 @@ class OnlineTest extends JFrame implements ActionListener
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("insert into qao values(1,'Q1. What language are we using ?','C1','C1++','J1ava','P1ython')");
-            stmt.executeUpdate("insert into qao values(2,'Q2. What language are we using ?','C2','C2++','J2ava','P2ython')");
-            stmt.executeUpdate("insert into qao values(3,'Q3. What language are we using ?','C3','C3++','J3ava','P3ython')");
-            stmt.executeUpdate("insert into qao values(4,'Q4. What language are we using ?','C4','C4++','J4ava','P4ython')");
-            stmt.executeUpdate("insert into qao values(5,'Q5. What language are we using ?','C5','C5++','J5ava','P5ython')");
-            stmt.executeUpdate("insert into qao values(6,'Q6. What language are we using ?','C6','C6++','J6ava','P6ython')");
-            stmt.executeUpdate("insert into qao values(7,'Q7. What language are we using ?','C7','C7++','J7ava','P7ython')");
-            stmt.executeUpdate("insert into qao values(8,'Q8. What language are we using ?','C8','C8++','J8ava','P8ython')");
-            stmt.executeUpdate("insert into qao values(9,'Q9. What language are we using ?','C9','C9++','J9ava','P9ython')");
-            stmt.executeUpdate("insert into qao values(10,'Q10. What language are we using ?','C10','C10++','J10ava','P10ython')");
-            stmt.executeUpdate("insert into qao values(11,'Q11. What language are we using ?','C11','C11++','J11ava','P11ython')");
-            stmt.executeUpdate("insert into qao values(12,'Q12. What language are we using ?','C12','C12++','J12ava','P12ython')");
-            stmt.executeUpdate("insert into qao values(13,'Q13. What language are we using ?','C13','C13++','J13ava','P13ython')");
-            stmt.executeUpdate("insert into qao values(14,'Q14. What language are we using ?','C14','C14++','J14ava','P14ython')");
-            stmt.executeUpdate("insert into qao values(15,'Q15. What language are we using ?','C15','C15++','J15ava','P15ython')");
-            stmt.executeUpdate("insert into qao values(16,'Q16. What language are we using ?','C16','C16++','J16ava','P16ython')");
-            stmt.executeUpdate("insert into qao values(17,'Q17. What language are we using ?','C17','C17++','J17ava','P17ython')");
-            stmt.executeUpdate("insert into qao values(18,'Q18. What language are we using ?','C18','C18++','J18ava','P18ython')");
-            stmt.executeUpdate("insert into qao values(19,'Q19. What language are we using ?','C19','C19++','J19ava','P19ython')");
-            stmt.executeUpdate("insert into qao values(20,'Q20. What language are we using ?','C20','C20++','J20ava','P20ython')");
+            stmt.executeUpdate("insert into qao values(1,'What language are we using ?','C1','C1++','J1ava','P1ython')");
+            stmt.executeUpdate("insert into qao values(2,'What language are we using ?','C2','C2++','J2ava','P2ython')");
+            stmt.executeUpdate("insert into qao values(3,'What language are we using ?','C3','C3++','J3ava','P3ython')");
+            stmt.executeUpdate("insert into qao values(4,'What language are we using ?','C4','C4++','J4ava','P4ython')");
+            stmt.executeUpdate("insert into qao values(5,'What language are we using ?','C5','C5++','J5ava','P5ython')");
+            stmt.executeUpdate("insert into qao values(6,'What language are we using ?','C6','C6++','J6ava','P6ython')");
+            stmt.executeUpdate("insert into qao values(7,'What language are we using ?','C7','C7++','J7ava','P7ython')");
+            stmt.executeUpdate("insert into qao values(8,'What language are we using ?','C8','C8++','J8ava','P8ython')");
+            stmt.executeUpdate("insert into qao values(9,'What language are we using ?','C9','C9++','J9ava','P9ython')");
+            stmt.executeUpdate("insert into qao values(10,'What language are we using ?','C10','C10++','J10ava','P10ython')");
+            stmt.executeUpdate("insert into qao values(11,'What language are we using ?','C11','C11++','J11ava','P11ython')");
+            stmt.executeUpdate("insert into qao values(12,'What language are we using ?','C12','C12++','J12ava','P12ython')");
+            stmt.executeUpdate("insert into qao values(13,'What language are we using ?','C13','C13++','J13ava','P13ython')");
+            stmt.executeUpdate("insert into qao values(14,'What language are we using ?','C14','C14++','J14ava','P14ython')");
+            stmt.executeUpdate("insert into qao values(15,'What language are we using ?','C15','C15++','J15ava','P15ython')");
+            stmt.executeUpdate("insert into qao values(16,'What language are we using ?','C16','C16++','J16ava','P16ython')");
+            stmt.executeUpdate("insert into qao values(17,'What language are we using ?','C17','C17++','J17ava','P17ython')");
+            stmt.executeUpdate("insert into qao values(18,'What language are we using ?','C18','C18++','J18ava','P18ython')");
+            stmt.executeUpdate("insert into qao values(19,'What language are we using ?','C19','C19++','J19ava','P19ython')");
+            stmt.executeUpdate("insert into qao values(20,'What language are we using ?','C20','C20++','J20ava','P20ython')");
             con.close();
         }
         catch(Exception e)
