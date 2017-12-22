@@ -255,7 +255,7 @@ class OnlineTest extends JFrame implements ActionListener
             {
                 if(jb[i].isSelected()) //if answer has been selected in radio button group
                 {
-                    String sql1 = "insert into ua(qno,userans) values("+(current+1)+",'"+jb[i].getText()+"') on duplicate key update userans='"+jb[i].getText()+"'";
+                    String sql1 = "insert into stuua(qno,userans) values("+(current+1)+",'"+jb[i].getText()+"') on duplicate key update userans='"+jb[i].getText()+"'";
                     //if user opts to change answer, she/he can do so because of the above command. 
                     //This allows the table to accept overwriting of existing values
                     stmt.executeUpdate(sql1);
@@ -278,7 +278,7 @@ class OnlineTest extends JFrame implements ActionListener
             Statement stmt = con.createStatement();
             for(int i=1;i<=10;i++)
             {
-                String sql="select userans, correctans from ua where qno="+i+"";
+                String sql="select userans, correctans from stuua where qno="+i+"";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("userans");
@@ -304,7 +304,7 @@ class OnlineTest extends JFrame implements ActionListener
             answerkey+="Answer Key:\nQ.No.  Your answer  Correct Answer\n";
             for(int i=1;i<=10;i++)
             {
-                String sql="select userans, correctans from ua where qno="+i+"";
+                String sql="select userans, correctans from stuua where qno="+i+"";
                 ResultSet rs = stmt.executeQuery(sql);
                 rs.next();
                 String s1 =rs.getString("userans"); //stores user's answer
@@ -365,26 +365,26 @@ class OnlineTest extends JFrame implements ActionListener
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("insert into ua values(1,'','Java')");
-            stmt.executeUpdate("insert into ua values(2,'','Java')");
-            stmt.executeUpdate("insert into ua values(3,'','Java')");
-            stmt.executeUpdate("insert into ua values(4,'','Java')");
-            stmt.executeUpdate("insert into ua values(5,'','Java')");
-            stmt.executeUpdate("insert into ua values(6,'','Java')");
-            stmt.executeUpdate("insert into ua values(7,'','Java')");
-            stmt.executeUpdate("insert into ua values(8,'','Java')");
-            stmt.executeUpdate("insert into ua values(9,'','Java')");
-            stmt.executeUpdate("insert into ua values(10,'','Java')");
-            stmt.executeUpdate("insert into ua values(11,'','Java')");
-            stmt.executeUpdate("insert into ua values(12,'','Java')");
-            stmt.executeUpdate("insert into ua values(13,'','Java')");
-            stmt.executeUpdate("insert into ua values(14,'','Java')");
-            stmt.executeUpdate("insert into ua values(15,'','Java')");
-            stmt.executeUpdate("insert into ua values(16,'','Java')");
-            stmt.executeUpdate("insert into ua values(17,'','Java')");
-            stmt.executeUpdate("insert into ua values(18,'','Java')");
-            stmt.executeUpdate("insert into ua values(19,'','Java')");
-            stmt.executeUpdate("insert into ua values(20,'','Java')");
+            stmt.executeUpdate("insert into ua values(1,'','J1ava')");
+            stmt.executeUpdate("insert into ua values(2,'','J2ava')");
+            stmt.executeUpdate("insert into ua values(3,'','J3ava')");
+            stmt.executeUpdate("insert into ua values(4,'','J4ava')");
+            stmt.executeUpdate("insert into ua values(5,'','J5ava')");
+            stmt.executeUpdate("insert into ua values(6,'','J6ava')");
+            stmt.executeUpdate("insert into ua values(7,'','J7ava')");
+            stmt.executeUpdate("insert into ua values(8,'','J8ava')");
+            stmt.executeUpdate("insert into ua values(9,'','J9ava')");
+            stmt.executeUpdate("insert into ua values(10,'','J10ava')");
+            stmt.executeUpdate("insert into ua values(11,'','J11ava')");
+            stmt.executeUpdate("insert into ua values(12,'','J12ava')");
+            stmt.executeUpdate("insert into ua values(13,'','J13ava')");
+            stmt.executeUpdate("insert into ua values(14,'','J14ava')");
+            stmt.executeUpdate("insert into ua values(15,'','J15ava')");
+            stmt.executeUpdate("insert into ua values(16,'','J16ava')");
+            stmt.executeUpdate("insert into ua values(17,'','J17ava')");
+            stmt.executeUpdate("insert into ua values(18,'','J18ava')");
+            stmt.executeUpdate("insert into ua values(19,'','J19ava')");
+            stmt.executeUpdate("insert into ua values(20,'','J20ava')");
             con.close();
         }
         catch(Exception e)
@@ -398,20 +398,46 @@ class OnlineTest extends JFrame implements ActionListener
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql:///qa","root","shivhek25@mysql");
-            PreparedStatement randomstmt = null;
-            String randomsql = "select * from qao order by rand() limit 1"; // pick 10 random questions from qao table and store in result set 
-            randomstmt = con.prepareStatement(randomsql);
-            ResultSet randomrs = randomstmt.executeQuery();
-            while(randomrs.next()) //push all values of rs in new database 'stuqao'
+            Statement stmt = con.createStatement();
+            int a[]=new int[21];
+            int c=0;
+            int p;
+            for(int i=0;i<=20;i++)
+                a[i]=0;
+            while(c!=10)
             {
-                String s1 =randomrs.getString("question");
-                String s2 =randomrs.getString("option1");
-                String s3 =randomrs.getString("option2");
-                String s4 =randomrs.getString("option3");
-                String s5 =randomrs.getString("option4");
-                randomstmt.executeUpdate("insert into stuqao(question,option1,option2,option3,option4) values('"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"')");
+                p=1+(int)(Math.random()*20);
+                if(a[p]==0)
+                {
+                    a[p]=1;
+                    c++;
+                }
             }
-            randomrs.close();
+            c=0;
+            for(int i=1;i<=20;i++)
+            {
+                if(a[i]==1)
+                {
+                    c++;
+                    String sql="select * from qao where qno="+i+"";
+                    ResultSet randomrs = stmt.executeQuery(sql);
+                    randomrs.next();
+                    String s1 =randomrs.getString("question");
+                    String s2 =randomrs.getString("option1");
+                    String s3 =randomrs.getString("option2");
+                    String s4 =randomrs.getString("option3");
+                    String s5 =randomrs.getString("option4");
+                    stmt.executeUpdate("insert into stuqao values("+c+",'"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"')");
+                    randomrs.close();
+                    sql="select * from ua where qno="+i+"";
+                    randomrs = stmt.executeQuery(sql);
+                    randomrs.next();
+                    s1 =randomrs.getString("correctans");
+                    stmt.executeUpdate("insert into stuua values("+c+",'','"+s1+"')");
+                    randomrs.close();
+
+                }
+            }
             con.close();
         }
         catch(Exception e)

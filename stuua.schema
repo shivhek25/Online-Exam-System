@@ -1,0 +1,11 @@
+USE qa;
+create table stuua  
+(   
+	qno int primary key,   
+	ans varchar(20),
+	foreign key (qno) references stuqao(qno)
+);
+ALTER TABLE stuua ADD UNIQUE (qno);
+ALTER TABLE stuua CHANGE COLUMN `ans` `userans` VARCHAR(20) NOT NULL;
+ALTER TABLE stuua ADD correctans varchar(20);
+ALTER TABLE stuua modify userans varchar(20);
