@@ -1,5 +1,7 @@
 [![OpenCode](https://img.shields.io/badge/Open-Code-ff6a00.svg?style=flat-square)](https://opencode18.github.io)
 
+# Online-Exam-System
+
 #### This is an online examination system built using JAVA and MySQL. Follow these steps to implement it. 
 
 ### Setup
